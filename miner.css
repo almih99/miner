@@ -1,0 +1,36 @@
+.miner-table {
+  empty-cells: show;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.miner-cell {
+  background-color: grey;
+  width: 30px;
+  height: 30px;
+}
+
+.miner-cell:hover {
+  outline: dotted 1px white;
+  outline-offset: -3px;
+}
+
+.miner-cell-flag {
+
+}
+
+.miner-cell-opened {
+
+}
+
+.miner-cell-hidden-mine {
+
+}
+
+.miner-cell-visible-mine {
+
+}
+
+.miner-cell-exploded-mine {
+
+}
