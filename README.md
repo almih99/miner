@@ -1,0 +1,2 @@
+# miner
+The miner game
