@@ -1,2 +1,3 @@
 # miner
-The miner game
+The miner game.
+in progress...
