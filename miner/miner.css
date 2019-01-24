@@ -1,0 +1,93 @@
+.miner-table {
+  table-layout: fixed;
+  empty-cells: show;
+  margin-left: auto;
+  margin-right: auto;
+  border: solid 2px gray;
+}
+
+.miner-cell {
+  background-color: grey;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.miner-cell:hover {
+  outline: dotted 1px white;
+  outline-offset: -3px;
+}
+
+.miner-cell-opened {
+  background-color: lightgray;
+}
+
+/* amount of neighbours - each with it own color */
+
+.miner-cell-opened[data-neighbors="1"]::before {
+  content: attr(data-neighbors);
+  color: blue;
+}
+
+.miner-cell-opened[data-neighbors="2"]::before {
+  content: attr(data-neighbors);
+  color: green;
+}
+
+.miner-cell-opened[data-neighbors="3"]::before {
+  content: attr(data-neighbors);
+  color: crimson;
+}
+
+.miner-cell-opened[data-neighbors="4"]::before {
+  content: attr(data-neighbors);
+  color: navy;
+}
+
+.miner-cell-opened[data-neighbors="5"]::before,
+.miner-cell-opened[data-neighbors="6"]::before,
+.miner-cell-opened[data-neighbors="7"]::before,
+.miner-cell-opened[data-neighbors="8"]::before {
+  content: attr(data-neighbors);
+  color: maroon;
+}
+
+.miner-cell-mine {
+  /* mines are hidden */
+}
+
+.miner-cell-mine.miner-cell-opened {
+  background-color: red;
+  transition: background-color 0.5s steps(3);
+}
+
+.miner-cell-visible-mine {
+/* ☢ U+2622 */
+}
+
+.miner-table-frozen .miner-cell-mine::before {
+  content: "\2622";
+  color: silver;
+}
+
+.miner-cell-mine.miner-cell-opened::before {
+  content: "\2622";
+  color: black;
+}
+
+/* marked */
+/*⚑ U+2691 */
+.miner-cell-flag::before {
+  content: "\2691";
+  color: #F0A1A1;
+}
+
+/* final state */
+
+.miner-table-frozen .miner-cell-flag::before {
+  content: none;
+}
+
+.miner-table-frozen .miner-cell-mine.miner-cell-flag::before {
+  content: "\2691";
+  color: #F0A1A1;
+}

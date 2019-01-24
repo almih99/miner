@@ -1,2 +1,2 @@
 # miner
-The miner game
+A simple JavaScript implementation of minesweeper game.

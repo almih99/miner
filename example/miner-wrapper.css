@@ -1,0 +1,54 @@
+/*
+This file is a part of example for a miner game
+*/
+
+.bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: url(miner.jpg);
+  background-size: cover;
+}
+
+.centerer {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: solid 2px gray;
+  padding: 20px;
+  background-color: ivory;
+  opacity: 0.9;
+}
+
+.control-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.control-panel button,
+.control-panel select {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.control-panel .current-values {
+  color: black;
+  font-size: 28px;
+  text-align: justify;
+  text-align-last: justify;
+}
+
+
+.spring {
+  flex-grow: 1;
+}
+
+#miner-field-paceholder {
+  margin-right: 20px;
+}
