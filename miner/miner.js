@@ -9,58 +9,33 @@ and
 The first one takes id of placeholder and build gamefield in it.
 The second one reset field to initial state.
 
-There is a set of events fired when player click on the field:
-minerfieldready
- when field is in it's initial state (afrer makeMinerBoard() or resetMinerBoard);
-minerfail
- when player opend a mine;
-mineropencell
- when player opend any cell;
-minersetflag
- when player set (or unset) flag;
-minerwin
- when player opend all cells without mines.
-
-Events have properties:
-e.mines
- amount of mines on the field;
-e.cells
- total amount of cells on the field;
-e.marked
- amount of marked by flags cells;
-e.opend
- omount of opend field.
+Tis file doesn't implements UI for timer, counter, game control. Instead it implements a set of events for building this items by yourself.
 
 Example of full implementation see in miner-wrapper.html
 */
 
-/*
-function wrt(e) {console.log(e);}
-document.addEventListener("minerfieldready", wrt);
-document.addEventListener("minerfail", wrt);
-document.addEventListener("mineropencell", wrt);
-document.addEventListener("minersetflag", wrt);
-document.addEventListener("minerwin", wrt);
-*/
-
 // miner game namespace
 (function () {
+  // exported
+  /////////////////////////////////////////////////////////////
   // function builds a new field as last child of
   // node where and fills it with mines
   function makeMinerBoard(where, mineCount, width, height, cellSize=30, cellSpacing=2) {
     //
     // outer table element
-    const t = document.createElement("table");
-    t.classList.add("miner-table");
-    t.classList.add("miner-table-uninitialized");
-    t.style.width = width*(cellSize+cellSpacing) + "px"; //fixed width for
-    t.style.borderSpacing = cellSpacing + "px";
-    t.setAttribute("data-mines", mineCount);
-    t.addEventListener('click', onCellClick);
-    t.addEventListener("contextmenu", onCellRClick);
+    const tbl = document.createElement("table");
+    tbl.classList.add("miner-table");
+    tbl.classList.add("miner-table-uninitialized");
+    tbl.style.tableLayout = "fixed";
+    tbl.style.width = width*(cellSize+cellSpacing) + "px"; //fixed width for
+    tbl.style.emptyCells = "show";
+    tbl.style.borderSpacing = cellSpacing + "px";
+    tbl.setAttribute("data-mines", mineCount);
+    tbl.addEventListener('click', onCellClick);
+    tbl.addEventListener("contextmenu", onCellRClick);
     // tbody element
-    const b = document.createElement("tbody");
-    t.appendChild(b);
+    const tb = document.createElement("tbody");
+    tbl.appendChild(tb);
     for(var rn=0; rn<height; rn++){
       // row element
       var r = document.createElement("tr");
@@ -77,13 +52,15 @@ document.addEventListener("minerwin", wrt);
         c.style.borderWidth="0px";
         r.appendChild(c);
       }
-      b.appendChild(r);
+      tb.appendChild(r);
     }
-    document.getElementById(where).appendChild(t);
+    document.getElementById(where).appendChild(tbl);
     // fire event
-    fireMinerEvent(t, "minerfieldready");
+    fireMinerEvent(tbl, "minerfieldready");
   }
 
+  // exported
+  /////////////////////////////////////////////////////////////
   // start new game on the same field
   function resetMinerBoard(where) {
     var tbl = document.getElementById(where).querySelector("table");
@@ -98,9 +75,11 @@ document.addEventListener("minerwin", wrt);
     fireMinerEvent(tbl, "minerfieldready");
   }
 
+  // place count minis on field table, but not in the currentCell
   function placeMines(tbl, count, currentCell) {
     const rowLimit = tbl.rows.length;
     const colLimit = tbl.rows[0].cells.length;
+    // place mines
     minesLoop:
     for(var mine=0; mine<count; mine++) {
       var limit=100; // max attempts count
@@ -112,6 +91,7 @@ document.addEventListener("minerwin", wrt);
       }while(cell==currentCell || cell.classList.contains("miner-cell-mine"));
       cell.classList.add("miner-cell-mine");
     }
+    // fore each cell count amount of neighbors
     for(var c of allCells(tbl)) {
       var nbcnt=0;
       for(var nc of neighborCells(c)) {
@@ -159,6 +139,7 @@ document.addEventListener("minerwin", wrt);
   // for cells with zero neighbor mines.
   function markAsOpened(cell) {
     cell.classList.add("miner-cell-opened");
+    cell.classList.remove("miner-cell-flag");
     if(cell.dataset.neighbors==="0") {
       for(var nb of neighborCells(cell)){
         if(nb.classList.contains("miner-cell-opened")) continue;
@@ -178,6 +159,7 @@ document.addEventListener("minerwin", wrt);
     fireMinerEvent(e.target, "minersetflag");
   }
 
+  // auxiliary function fires event of appropriated type and attributes
   function fireMinerEvent(target, type){
     var primaryEvent = new Event(type, {bubbles: true, cancelable: true});
     fillEvent(primaryEvent, target);
@@ -201,7 +183,7 @@ document.addEventListener("minerwin", wrt);
     return event;
   }
 
-
+  /////////////////////////////////////////////////////////////
   // generator gets any cell of table, and
   // returns iterator, which iterate through
   // all neighbor cells
@@ -223,6 +205,7 @@ document.addEventListener("minerwin", wrt);
     }
   }
 
+  /////////////////////////////////////////////////////////////
   // generator gets table or any cell in table and
   // returns iterator, which iterate through
   // all cells of this table

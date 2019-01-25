@@ -1,7 +1,8 @@
 /*
-This file is a part of example for a miner game
+This file is a part of example for a minesweeper game
 */
 
+/* background image */
 .bg {
   position: absolute;
   top: 0;
@@ -12,23 +13,90 @@ This file is a part of example for a miner game
   background-size: cover;
 }
 
+/* fail animation */
+@keyframes boom {
+  10% {
+    background-color: red;
+    transform-origin: -20% -20%;
+    transform: rotate(15deg) translate(-50%, -50%);
+  }
+  20% {
+    background-color: red;
+    transform: rotate(-15deg) translate(-50%, -50%);
+  }
+  30% {
+    background-color: red;
+    transform: rotate(10deg) translate(-50%, -50%);
+  }
+  40% {
+    background-color: red;
+    transform: rotate(-10deg) translate(-50%, -50%);
+  }
+  50% {
+    transform: rotate(5deg) translate(-50%, -50%);
+  }
+  60% {
+    transform: rotate(-5deg) translate(-50%, -50%);
+  }
+  70% {
+    transform: rotate(3deg) translate(-50%, -50%);
+  }
+  80% {
+    transform: rotate(-3deg) translate(-50%, -50%);
+  }
+  90% {
+    transform: rotate(2deg) translate(-50%, -50%);
+  }
+  100% {
+    transform: rotate(0deg) translate(-50%, -50%);
+    background-color: ivory;
+  }
+}
+
+/* win animation */
+@keyframes win {
+  10% {
+    background-color: rgb(100,255,100);
+  }
+  30% {
+    background-color: rgb(100,255,100);
+  }
+  100% {
+    background-color: ivory;
+  }
+}
+
+/* fail animation class */
+.fail {
+  animation: boom 0.5s;
+}
+
+/* win animation class */
+.win {
+  animation: win 3s;
+}
+
+/* container for game */
 .centerer {
   display: flex;
   flex-direction: row;
   position: absolute;
   top: 50%;
   left: 50%;
+  transform-origin: 0% 0%;
   transform: translate(-50%, -50%);
   border: solid 2px gray;
   padding: 20px;
   background-color: ivory;
-  opacity: 0.9;
+  opacity: 0.85;
 }
 
+/* containers for controls */
 .control-panel {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-left: 20px;
 }
 
 .control-panel button,
@@ -44,11 +112,23 @@ This file is a part of example for a miner game
   text-align-last: justify;
 }
 
-
+/* some free space on control panel and information about final state */
 .spring {
   flex-grow: 1;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  padding-top: 20px;
 }
 
-#miner-field-paceholder {
-  margin-right: 20px;
+/* fail state information */
+.fail .spring::before {
+  content: "FAIL";
+  color: red;
+}
+
+/* win state information */
+.win .spring::before {
+  content: "WIN";
+  color: green;
 }

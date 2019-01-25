@@ -25,6 +25,8 @@ function onStartGame(e) {
   document.getElementById("totalflags").innerHTML="0";
   document.getElementById("minuteselapsed").innerHTML="00";
   document.getElementById("secondselapsed").innerHTML="00";
+  document.getElementById("centerer").classList.remove("fail");
+  document.getElementById("centerer").classList.remove("win");
   isRunning=false;
 }
 
@@ -43,11 +45,13 @@ function onChangeState(e) {
 // Handler is triggered when all possible cells are opend.
 function onWin(e) {
   isRunning=false;
+  document.getElementById("centerer").classList.add("win");
 }
 
 // Handler is triggered when cell with mine was opened.
 function onFail(e) {
   isRunning=false;
+  document.getElementById("centerer").classList.add("fail");
 }
 
 // Handler is used for updating game timer.
