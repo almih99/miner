@@ -63,4 +63,4 @@ Events have properties:
 To use this code in ie8 you can compile it to appropriated format with:
 
 - babel miner/miner.js -o miner/miner.es5.js
-- browserify miner/miner.es5.js -o miner/miner.es5.plf.js
+- browserify miner/miner.es5.js -o miner/miner.es5.min.js -p tinyify
