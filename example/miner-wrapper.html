@@ -19,8 +19,14 @@ You can take it as base for embeding miner game in your page.
     <div id="centerer" class="centerer">
       <div id="miner-field-paceholder"></div>
       <div class="control-panel">
-        <div class="current-values">⚑ <span id="flagsopened">0</span>/<span id="totalflags">0</span></div>
-        <div class="current-values">⏰ <span id="minuteselapsed">0</span>:<span id="secondselapsed">00</span></div>
+        <div class="current-values">
+          <span class="black-flag">&nbsp;</span>
+          <span id="flagsopened">0</span>/<span id="totalflags">0</span>
+        </div>
+        <div class="current-values">
+          <span class="black-clock">&nbsp;</span>
+          <span id="minuteselapsed">0</span>:<span id="secondselapsed">00</span>
+        </div>
         <div class="spring"></div>
         <div><button type="button" onclick="resetMinerBoard('miner-field-paceholder')">Reset</button></div>
         <div><hr></div>
